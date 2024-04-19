@@ -1,33 +1,28 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useTimer = (startDate: string | Date, endDate: string | Date) => {
-  //   const [invalidateTimer, setInvalidateTimer] = useState(false);
-  const target = useMemo(
-    () =>
-      new Date(endDate).getTime() +
-      (new Date(endDate).getTime() - new Date(startDate).getTime()),
-    [endDate, startDate]
-  )
-  const countDownDate = new Date(target).getTime()
+  const countDownDate = new Date(endDate).getTime()
 
   const [countDown, setCountDown] = useState(
-    countDownDate - new Date(endDate).getTime()
+    countDownDate - new Date().getTime()
   )
 
-  //   const resetTimer = () => setInvalidateTimer((e) => !e);
-
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCountDown(
-        countDownDate - new Date(endDate).getTime() <= 0
-          ? 0
-          : countDownDate - new Date(endDate).getTime()
-      )
-    }, 1000)
+    const start = new Date().getTime > new Date(startDate).getTime
+    let interval: ReturnType<typeof setInterval>
+    if (start) {
+      interval = setInterval(() => {
+        setCountDown(
+          countDownDate - new Date(endDate).getTime() <= 0
+            ? 0
+            : countDownDate - new Date(endDate).getTime()
+        )
+      }, 1000)
 
-    if (countDown < 0) {
-      setCountDown(0)
-      clearInterval(interval)
+      if (countDown < 0) {
+        setCountDown(0)
+        clearInterval(interval)
+      }
     }
 
     return () => clearInterval(interval)
