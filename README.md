@@ -2,8 +2,7 @@
 
 > A countdown timer React component.
 
-[![NPM](https://img.shields.io/npm/v/protime-react-component.svg)](https://www.npmjs.com/package/protime-react-component) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
+[![NPM](https://img.shields.io/npm/v/@toluade/protime-react-component.svg)](https://www.npmjs.com/package/@toluade/protime-react-component) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -23,7 +22,7 @@ yarn add @toluade/protime-react-component
 
 - `startDate: string | Date`
 
-  - This is the time the timer will start counting down from.
+  - The timer won't start until this time is reached.
 
 - `endDate: string | Date`
 
@@ -35,17 +34,17 @@ yarn add @toluade/protime-react-component
 ## Example Usage
 
 ```js
-import ProTime from "@toluade/protime-react-component";
+import ProTime from '@toluade/protime-react-component'
 
 function App() {
-  const startDate = "2024-04-19T09:00";
-  const endDate = "2024-12-25T09:00";
+  const startDate = '2024-04-19T09:00'
+  const endDate = '2024-12-25T09:00'
 
   return (
     <div>
-      <ProTime startDate={startDate} endDate={endDate} className="" />
+      <ProTime startDate={startDate} endDate={endDate} className='' />
     </div>
-  );
+  )
 }
 ```
 
