@@ -2,11 +2,16 @@ import { useEffect, useMemo, useState } from 'react'
 
 const useTimer = (startDate: string | Date, endDate: string | Date) => {
   //   const [invalidateTimer, setInvalidateTimer] = useState(false);
-  const target = useMemo(() => new Date(endDate).getTime(), [endDate])
+  const target = useMemo(
+    () =>
+      new Date(endDate).getTime() +
+      (new Date(endDate).getTime() - new Date(startDate).getTime()),
+    [endDate, startDate]
+  )
   const countDownDate = new Date(target).getTime()
 
   const [countDown, setCountDown] = useState(
-    countDownDate - new Date(startDate).getTime()
+    countDownDate - new Date(endDate).getTime()
   )
 
   //   const resetTimer = () => setInvalidateTimer((e) => !e);
@@ -14,9 +19,9 @@ const useTimer = (startDate: string | Date, endDate: string | Date) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCountDown(
-        countDownDate - new Date(startDate).getTime() <= 0
+        countDownDate - new Date(endDate).getTime() <= 0
           ? 0
-          : countDownDate - new Date(startDate).getTime()
+          : countDownDate - new Date(endDate).getTime()
       )
     }, 1000)
 
