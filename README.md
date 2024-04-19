@@ -1,19 +1,9 @@
 # ProTime
 
-A countdown timer React component.
+> A countdown timer React component.
 
-### Props
+[![NPM](https://img.shields.io/npm/v/protime-react-component.svg)](https://www.npmjs.com/package/protime-react-component) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-- `startDate: string | Date`
-
-  - This is the time the timer will start counting down from.
-
-- `endDate: string | Date`
-
-  - This is the time the timer will count down to.
-
-- `className: string`
-  - This is the className property of the container element.
 
 ## Install
 
@@ -28,6 +18,19 @@ yarn
 ```sh yarn
 yarn add @toluade/protime-react-component
 ```
+
+### Props
+
+- `startDate: string | Date`
+
+  - This is the time the timer will start counting down from.
+
+- `endDate: string | Date`
+
+  - This is the time the timer will count down to.
+
+- `className: string`
+  - This is the className property of the container element.
 
 ## Example Usage
 
@@ -45,3 +48,7 @@ function App() {
   );
 }
 ```
+
+## License
+
+MIT © [Toluade](https://github.com/Toluade)
