@@ -1,0 +1,32 @@
+{
+  "name": "@toluade/protime-react-component",
+  "version": "1.0.0",
+  "description": "A timer component for your React app",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "keywords": [
+    "timer",
+    "countdown",
+    "protime",
+    "react"
+  ],
+  "author": "Toluwalope Adeoye <toluade1512@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.2",
+    "@types/react": "^18.2.73",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
