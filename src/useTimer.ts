@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 const useTimer = (startDate: string | Date, endDate: string | Date) => {
-  const countDownDate = new Date(endDate).getTime()
+  const target = useMemo(() => {
+    return new Date(endDate).getTime()
+  }, [endDate])
+
+  const countDownDate = new Date(target).getTime()
 
   const [countDown, setCountDown] = useState(
     countDownDate - new Date().getTime()
   )
 
   useEffect(() => {
-    const start = new Date().getTime > new Date(startDate).getTime
+    const start = new Date().getTime() > new Date(startDate).getTime()
     let interval: ReturnType<typeof setInterval>
     if (start) {
       interval = setInterval(() => {
