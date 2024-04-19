@@ -4,9 +4,9 @@
   "description": "A timer component for your React app",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Toluade/protime-react-component"
   },
-  "homepage": "",
+  "homepage": "https://github.com/Toluade/protime-react-component#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
