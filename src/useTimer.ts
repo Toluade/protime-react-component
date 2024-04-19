@@ -17,9 +17,9 @@ const useTimer = (startDate: string | Date, endDate: string | Date) => {
     if (start) {
       interval = setInterval(() => {
         setCountDown(
-          countDownDate - new Date(endDate).getTime() <= 0
+          countDownDate - new Date().getTime() <= 0
             ? 0
-            : countDownDate - new Date(endDate).getTime()
+            : countDownDate - new Date().getTime()
         )
       }, 1000)
 
