@@ -36,11 +36,14 @@ const useProTime = (
     return () => clearInterval(interval)
   }, [countDown, countDownDate])
 
-  return {
-    ...(isFormatted
-      ? zeroFormat(getReturnValues(countDown))
-      : getReturnValues(countDown))
-  }
+  if (isFormatted)
+    return zeroFormat(getReturnValues(countDown)) as {
+      days: string
+      hours: string
+      minutes: string
+      seconds: string
+    }
+  else return getReturnValues(countDown)
 }
 
 const getReturnValues = (countDown: number) => {
