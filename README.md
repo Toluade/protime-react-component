@@ -66,7 +66,7 @@ function App() {
 
   - This is the time the timer will count down to.
 
-- `isFormatted: boolean`
+- `isFormatted?: boolean`
   - If you want the values returned formatted with a "0" in front when the value is less than 10, set to `true`. The default value is `false`.
 
 ### Example Usage
