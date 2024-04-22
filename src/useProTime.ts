@@ -1,6 +1,10 @@
 import { useEffect, useState, useMemo } from 'react'
 
-const useTimer = (startDate: string | Date, endDate: string | Date) => {
+const useProTime = (
+  startDate: string | Date,
+  endDate: string | Date,
+  isFormatted: boolean = false
+) => {
   const target = useMemo(() => {
     return new Date(endDate).getTime()
   }, [endDate])
@@ -33,8 +37,9 @@ const useTimer = (startDate: string | Date, endDate: string | Date) => {
   }, [countDown, countDownDate])
 
   return {
-    ...zeroFormat(getReturnValues(countDown))
-    // resetTimer,
+    ...(isFormatted
+      ? zeroFormat(getReturnValues(countDown))
+      : getReturnValues(countDown))
   }
 }
 
@@ -64,4 +69,4 @@ const addZero = (val: number) => {
   return val < 10 ? '0' + val : val
 }
 
-export default useTimer
+export default useProTime

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import useTimer from './useTimer'
+import useProTime from './useProTime'
 
 type Props = {
   className: string
@@ -8,9 +8,10 @@ type Props = {
 }
 
 const ProTime = (props: Props) => {
-  const { days, hours, minutes, seconds } = useTimer(
+  const { days, hours, minutes, seconds } = useProTime(
     props.startDate,
-    props.endDate
+    props.endDate,
+    true
   )
 
   if (days !== '00')
