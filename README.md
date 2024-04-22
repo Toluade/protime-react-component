@@ -35,7 +35,7 @@ yarn add @toluade/protime-react-component
 - `className: string`
   - This is the className property of the container element.
 
-## Example Usage
+### Example Usage
 
 ```js
 import { ProTime } from '@toluade/protime-react-component'
@@ -69,7 +69,7 @@ function App() {
 - `isFormatted: boolean`
   - If you want the values returned formatted with a "0" in front when the value is less than 10, set to `true`. The default value is `false`.
 
-## Example Usage
+### Example Usage
 
 ```js
 import { useProTime } from '@toluade/protime-react-component'
