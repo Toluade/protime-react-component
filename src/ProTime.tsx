@@ -7,16 +7,12 @@ type Props = {
   endDate: Date | string
 }
 
-const ProTime = (props: Props) => {
-  const { days, hours, minutes, seconds } = useProTime(
-    props.startDate,
-    props.endDate,
-    true
-  )
+const ProTime = ({ startDate, endDate, className }: Props) => {
+  const { days, hours, minutes, seconds } = useProTime(startDate, endDate, true)
 
   if (days !== '00')
     return (
-      <p className={props.className}>
+      <p className={className}>
         <span id='days'>{days} days</span>
         <span id='hour'>{hours} hours</span>
         <span id='min'>{minutes} min</span>
@@ -24,7 +20,7 @@ const ProTime = (props: Props) => {
       </p>
     )
   return (
-    <p className={props.className}>
+    <p className={className}>
       <span id='hour'>{hours}</span>
       <span className='column timer__item'>:</span>
       <span id='min'>{minutes}</span>
