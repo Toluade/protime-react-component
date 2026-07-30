@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  # pull_request already covers branches, so push is limited to main
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+      - run: yarn format:check
+      - run: yarn typecheck
+      - run: yarn test
+      - run: yarn build
+
+  react18:
+    name: React 18
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      # the peer range allows React 18, so prove the suite passes there too
+      - name: Install React 18
+        run: >-
+          yarn add --dev --ignore-scripts
+          react@^18.3.1 react-dom@^18.3.1
+          @types/react@^18.3.12 @types/react-dom@^18.3.1
+
+      - run: yarn typecheck
+      - run: yarn test
