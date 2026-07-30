@@ -1,52 +1,72 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 
-const useProTime = (
+export type ProTimeValues = {
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+}
+
+export type FormattedProTimeValues = {
+  days: string
+  hours: string
+  minutes: string
+  seconds: string
+}
+
+function useProTime(
+  startDate: string | Date,
+  endDate: string | Date,
+  isFormatted: true
+): FormattedProTimeValues
+function useProTime(
+  startDate: string | Date,
+  endDate: string | Date,
+  isFormatted?: false
+): ProTimeValues
+function useProTime(
+  startDate: string | Date,
+  endDate: string | Date,
+  isFormatted?: boolean
+): ProTimeValues | FormattedProTimeValues
+function useProTime(
   startDate: string | Date,
   endDate: string | Date,
   isFormatted: boolean = false
-) => {
-  const target = useMemo(() => {
-    return new Date(endDate).getTime()
-  }, [endDate])
+): ProTimeValues | FormattedProTimeValues {
+  // plain numbers, so the effect re-runs when the instant changes but not when
+  // a caller passes a fresh Date object for the same instant
+  const start = new Date(startDate).getTime()
+  const target = new Date(endDate).getTime()
 
-  const countDownDate = new Date(target).getTime()
-
-  const [countDown, setCountDown] = useState(
-    countDownDate - new Date().getTime()
-  )
+  const [countDown, setCountDown] = useState(() => remainingUntil(target))
 
   useEffect(() => {
-    const start = new Date().getTime() > new Date(startDate).getTime()
-    let interval: ReturnType<typeof setInterval>
-    if (start) {
-      interval = setInterval(() => {
-        setCountDown(
-          countDownDate - new Date().getTime() <= 0
-            ? 0
-            : countDownDate - new Date().getTime()
-        )
-      }, 1000)
+    // reflect the current endDate straight away, even while still waiting on
+    // startDate, so a changed endDate is never left a second out of date
+    setCountDown(remainingUntil(target))
 
-      if (countDown < 0) {
-        setCountDown(0)
-        clearInterval(interval)
-      }
-    }
+    const interval = setInterval(() => {
+      if (Date.now() < start) return
+
+      const remaining = remainingUntil(target)
+      setCountDown(remaining)
+
+      // nothing left to count, so stop waking up every second
+      if (remaining === 0) clearInterval(interval)
+    }, 1000)
 
     return () => clearInterval(interval)
-  }, [countDown, countDownDate])
+  }, [start, target])
 
-  if (isFormatted)
-    return zeroFormat(getReturnValues(countDown)) as {
-      days: string
-      hours: string
-      minutes: string
-      seconds: string
-    }
-  else return getReturnValues(countDown)
+  const values = getReturnValues(countDown)
+
+  return isFormatted ? zeroFormat(values) : values
 }
 
-const getReturnValues = (countDown: number) => {
+const remainingUntil = (target: number) => Math.max(0, target - Date.now())
+
+const getReturnValues = (countDown: number): ProTimeValues => {
   // calculate time left
   const days = Math.floor(countDown / (1000 * 60 * 60 * 24))
   const hours = Math.floor(
@@ -58,18 +78,14 @@ const getReturnValues = (countDown: number) => {
   return { days, hours, minutes, seconds }
 }
 
-const zeroFormat = (obj: any) => {
-  const objVal = { ...obj }
+const zeroFormat = (values: ProTimeValues): FormattedProTimeValues => ({
+  days: addZero(values.days),
+  hours: addZero(values.hours),
+  minutes: addZero(values.minutes),
+  seconds: addZero(values.seconds)
+})
 
-  Object.keys(objVal).forEach(function (key) {
-    objVal[key] = addZero(objVal[key])
-  })
-
-  return objVal
-}
-
-const addZero = (val: number) => {
-  return val < 10 ? '0' + val : val
-}
+const addZero = (value: number): string =>
+  value < 10 ? `0${value}` : String(value)
 
 export default useProTime

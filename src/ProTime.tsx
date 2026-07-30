@@ -1,13 +1,12 @@
-import * as React from 'react'
 import useProTime from './useProTime'
 
-type Props = {
-  className: string
+export type ProTimeProps = {
+  className?: string
   startDate: Date | string
   endDate: Date | string
 }
 
-const ProTime = ({ startDate, endDate, className }: Props) => {
+const ProTime = ({ startDate, endDate, className }: ProTimeProps) => {
   const { days, hours, minutes, seconds } = useProTime(startDate, endDate, true)
 
   if (days !== '00')

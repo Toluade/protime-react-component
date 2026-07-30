@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# This project uses yarn; a second lockfile would drift
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
