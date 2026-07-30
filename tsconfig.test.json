@@ -1,6 +1,17 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs"
-  }
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/setupTests.ts",
+    "vitest.config.ts",
+    "tsup.config.ts"
+  ],
+  // must be restated: the base config excludes the very files this one checks,
+  // and exclude is inherited, so without this the program is empty
+  "exclude": ["node_modules", "dist"]
 }
