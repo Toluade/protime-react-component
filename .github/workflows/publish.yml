@@ -13,9 +13,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
@@ -28,7 +28,9 @@ jobs:
       - run: yarn install --frozen-lockfile
         env:
           # setup-node writes an .npmrc referencing this variable, and yarn 1
-          # aborts on an undefined one rather than substituting empty
+          # aborts on an undefined one rather than substituting empty. Required
+          # from setup-node v7, which no longer exports a placeholder token when
+          # none is supplied, as OIDC publishing does not need one
           NODE_AUTH_TOKEN: ''
 
       - name: Refuse to publish a mismatched version
