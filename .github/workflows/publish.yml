@@ -9,6 +9,9 @@ permissions:
   # required for npm trusted publishing over OIDC
   id-token: write
 
+env:
+  NODE_AUTH_TOKEN: ''
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -26,12 +29,6 @@ jobs:
         run: npm install --global npm@^11
 
       - run: yarn install --frozen-lockfile
-        env:
-          # setup-node writes an .npmrc referencing this variable, and yarn 1
-          # aborts on an undefined one rather than substituting empty. Required
-          # from setup-node v7, which no longer exports a placeholder token when
-          # none is supplied, as OIDC publishing does not need one
-          NODE_AUTH_TOKEN: ''
 
       - name: Refuse to publish a mismatched version
         run: |
